@@ -5,6 +5,13 @@ ROS2 Workspace for S25 RoboticsII
 
 Press the `Fork` on the page and fork the repo to your account. This will create a repository with exact same content in your github account.
 
+## GROUP MEMBER NAMES
+
+Adrien Neveu
+Ruben Alvarez
+Brian Stern
+Cody Smith
+
 ## Cloning the repository 
 On your machine, open a new terminal (via VNC or SSH)
 ```

@@ -185,42 +185,47 @@ class TrackingNode(Node):
         
         ########### Write your code here ###########
         
-        # TODO: Update the control velocity command
-        cmd_vel = Twist()
+        # Obstacle Avoidance Radius Value
+        obstacle_avoidance_radius = 0.2 # Minimum distance to obstacle to avoid  
 
+        # Proportional Controller K Values
+        kp_linear = 0.5
+        kp_angular = 1.0 
+
+        # Goal Location Calculations
         dx_goal = current_goal_pose[0] - current_obs_pose[0]
         dy_goal = current_goal_pose[1] - current_obs_pose[1]
-        distance_to_goal = math.sqrt(dx_goal**2 + dy_goal**2)
-        angle_to_goal = math.atan2(dy_goal, dx_goal)
+        distance_goal = math.sqrt(dx_goal**2 + dy_goal**2)
+        print(distance_goal)
 
-        # TODO: Obstacle avoidance (simple method)
-        # If the obstacle is too close, rotate or move around it
-        obstacle_avoidance_radius = 0.5 # Minimum distance to obstacle to avoid
-        obs_dx = current_obs_pose[0] - current_goal_pose[0]
-        obs_dy = current_obs_pose[1] - current_goal_pose[1]
-        obstacle_distance = math.sqrt(obs_dx**2 + obs_dy**2)
-
-        kp_linear = 0.5
-        kp_angular = 1.0
-        avoidance_distance = .1
+        # Obstacle Location Calculations
+        dx_obs = current_obs_pose[0] - current_goal_pose[0]
+        dy_obs = current_obs_pose[1] - current_goal_pose[1]
+        distance_obstacle = math.sqrt(dx_obs**2 + dy_obs**2)
+        print(distance_obstacle)
      
-         # If within 0.3 meters of the goal, stop
-        if distance_to_goal < 0.3:
+        # If within 0.3 meters of the goal, stop
+        if distance_goal < 0.3:
             cmd_vel.linear.x = 0.0
             cmd_vel.angular.z = 0.0
-            print('Stop')
+            print('Reached Goal')
             return cmd_vel
 
-        if obstacle_distance < obstacle_avoidance_radius:
+        # If too close to an obstacle, begin avoidance
+        if distance_obstacle < obstacle_avoidance_radius:
+            angle_obstacle = math.atan2(dy_obs, dx_obs)+math.pi()
             cmd_vel.linear.x = 0.1
             cmd_vel.angular.z = 1.0 # Turn to avoid the obstacle
-            print('Avoid')
+            print('Avoiding Obstacle')
             return cmd_vel
+        
+        # Approach Goal
         else:
-            cmd_vel.linear.x = kp_linear * distance_to_goal
-            cmd_vel.angular.z = kp_angular * angle_to_goal
+            angle_goal = math.atan2(dy_goal, dx_goal)
+            cmd_vel.linear.x = kp_linear * distance_goal
+            cmd_vel.angular.z = kp_angular * angle_goal
      
-        print('Kp')
+        print('Going to Goal')
         return cmd_vel
         
 def main(args=None):

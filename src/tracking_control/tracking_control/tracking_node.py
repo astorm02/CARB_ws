@@ -120,8 +120,8 @@ class TrackingNode(Node):
         # You can decide to filter the detected object pose here
         # For example, you can filter the pose based on the distance from the camera
         # or the height of the object
-        # if np.linalg.norm(center_points) > 3 or center_points[2] > 0.7:
-            # return
+        if np.linalg.norm(center_points) > 3 or center_points[2] > 0.7:
+            return
         
         try:
             # Transform the center point from the camera frame to the world frame
@@ -195,6 +195,7 @@ class TrackingNode(Node):
 
         kp_linear = 0.5
         kp_angular = 1.0
+        avoidance_distance = 1.0
      
          # If within 0.3 meters of the goal, stop
         if distance_to_goal < 0.3:
@@ -204,6 +205,17 @@ class TrackingNode(Node):
             cmd_vel.linear.x = kp_linear * distance_to_goal
             cmd_vel.angular.z = kp_angular * angle_to_goal
         return cmd_vel
+
+        # TODO: Obstacle avoidance (simple method)
+        # If the obstacle is too close, rotate or move around it
+        obstacle_avoidance_radius = 0.5 # Minimum distance to obstacle to avoid
+        obs_dx = current_obs_pose[0] - current_goal_pose[0]
+        obs_dy = current_obs_pose[1] - current_goal_pose[1]
+        obstacle_distance = math.sqrt(obs_dx**2 + obs_dy**2)
+     
+        if obstacle_distance < obstacle_avoidance_radius:
+              cmd_vel.angular.z = 1.0 # Turn to avoid the obstacle
+
         ############################################
 
 def main(args=None):

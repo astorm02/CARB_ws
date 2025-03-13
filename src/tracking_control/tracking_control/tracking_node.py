@@ -163,7 +163,7 @@ class TrackingNode(Node):
         # But, you may want to think about what to do in this case
         # and update the command velocity accordingly
         
-        if self.goal_pose and self.obs_pose is None: ### Added the 'and self.obs_pose'. Currently untested. It should resolve the robot running into the obstacle.
+        if self.goal_pose is None and self.obs_pose is None: ### Added the 'and self.obs_pose'. Currently untested. It should resolve the robot running into the obstacle.
             cmd_vel = Twist()
             cmd_vel.linear.x = 1.0
             cmd_vel.angular.z = 0.0

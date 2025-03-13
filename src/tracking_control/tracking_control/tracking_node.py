@@ -193,6 +193,13 @@ class TrackingNode(Node):
         distance_to_goal = math.sqrt(dx_goal**2 + dy_goal**2)
         angle_to_goal = math.atan2(dy_goal, dx_goal)
 
+        # TODO: Obstacle avoidance (simple method)
+        # If the obstacle is too close, rotate or move around it
+        obstacle_avoidance_radius = 0.5 # Minimum distance to obstacle to avoid
+        obs_dx = current_obs_pose[0] - current_goal_pose[0]
+        obs_dy = current_obs_pose[1] - current_goal_pose[1]
+        obstacle_distance = math.sqrt(obs_dx**2 + obs_dy**2)
+
         kp_linear = 0.5
         kp_angular = 1.0
         avoidance_distance = 1.0
@@ -201,23 +208,18 @@ class TrackingNode(Node):
         if distance_to_goal < 0.3:
             cmd_vel.linear.x = 0.0
             cmd_vel.angular.z = 0.0
+
+        if obstacle_distance < obstacle_avoidance_radius:
+            cmd_vel.linear.x = 0.1
+            cmd_vel.angular.z = 1.0 # Turn to avoid the obstacle
+            
         else:
             cmd_vel.linear.x = kp_linear * distance_to_goal
             cmd_vel.angular.z = kp_angular * angle_to_goal
-        return cmd_vel
-
-        # TODO: Obstacle avoidance (simple method)
-        # If the obstacle is too close, rotate or move around it
-        obstacle_avoidance_radius = 0.5 # Minimum distance to obstacle to avoid
-        obs_dx = current_obs_pose[0] - current_goal_pose[0]
-        obs_dy = current_obs_pose[1] - current_goal_pose[1]
-        obstacle_distance = math.sqrt(obs_dx**2 + obs_dy**2)
      
-        if obstacle_distance < obstacle_avoidance_radius:
-              cmd_vel.angular.z = 1.0 # Turn to avoid the obstacle
-
-        ############################################
-
+        print(cmd_vel)
+        return cmd_vel
+        
 def main(args=None):
     # Initialize the rclpy library
     rclpy.init(args=args)

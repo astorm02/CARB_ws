@@ -202,7 +202,7 @@ class TrackingNode(Node):
 
         kp_linear = 0.5
         kp_angular = 1.0
-        avoidance_distance = 1.0
+        avoidance_distance = .1
      
          # If within 0.3 meters of the goal, stop
         if distance_to_goal < 0.3:

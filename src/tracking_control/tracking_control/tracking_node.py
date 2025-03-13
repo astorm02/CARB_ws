@@ -95,8 +95,8 @@ class TrackingNode(Node):
         # You can decide to filter the detected object pose here
         # For example, you can filter the pose based on the distance from the camera
         # or the height of the object
-        if np.linalg.norm(center_points) > 3 or center_points[2] > 0.7:
-            return
+        # if np.linalg.norm(center_points) > 3 or center_points[2] > 0.7:
+            # return
         
         try:
             # Transform the center point from the camera frame to the world frame
@@ -120,8 +120,8 @@ class TrackingNode(Node):
         # You can decide to filter the detected object pose here
         # For example, you can filter the pose based on the distance from the camera
         # or the height of the object
-        if np.linalg.norm(center_points) > 3 or center_points[2] > 0.7:
-            return
+        # if np.linalg.norm(center_points) > 3 or center_points[2] > 0.7:
+            # return
         
         try:
             # Transform the center point from the camera frame to the world frame
@@ -173,13 +173,13 @@ class TrackingNode(Node):
         current_obs_pose, current_goal_pose = self.get_current_poses()
         
         # TODO: get the control velocity command
-        cmd_vel = self.controller()
+        cmd_vel = self.controller(current_obs_pose, current_goal_pose)
         
         # publish the control command
         self.pub_control_cmd.publish(cmd_vel)
         #################################################
     
-    def controller(self):
+    def controller(self, current_obs_pose, current_goal_pose):
         # Instructions: You can implement your own control algorithm here
         # feel free to modify the code structure, add more parameters, more input variables for the function, etc.
         
@@ -187,9 +187,25 @@ class TrackingNode(Node):
         
         # TODO: Update the control velocity command
         cmd_vel = Twist()
-        cmd_vel.linear.x = 0
-        cmd_vel.linear.y = 0
-        cmd_vel.angular.z = 0
+
+        dx_goal = current_goal_pose[0] - current_obs_pose[0]
+        dy_goal = current_goal_pose[1] - current_obs_pose[1]
+        distance_to_goal = math.sqrt(dx_goal^2 + dy_goal^2)
+        angle_to_goal = math.atan2(dy_goal, dx_goal)
+
+        kp_linear = 0.5
+        kp_angular = 1.0
+     
+         # If within 0.3 meters of the goal, stop
+        if distance_to_goal < 0.3:
+              cmd_vel.linear.x = 0.0
+      c       md_vel.angular.z = 0.0
+        else:
+            cmd_vel.linear.x = kp_linear * distance_to_goal
+            cmd_vel.angular.z = kp_angular * (angle_to_goal)
+            cmd_vel.linear.x = 0
+            cmd_vel.linear.y = 0
+            cmd_vel.angular.z = 0
         return cmd_vel
     
         ############################################

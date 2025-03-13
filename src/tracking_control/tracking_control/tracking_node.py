@@ -208,16 +208,19 @@ class TrackingNode(Node):
         if distance_to_goal < 0.3:
             cmd_vel.linear.x = 0.0
             cmd_vel.angular.z = 0.0
+            print('Stop')
+            return cmd_vel
 
         if obstacle_distance < obstacle_avoidance_radius:
             cmd_vel.linear.x = 0.1
             cmd_vel.angular.z = 1.0 # Turn to avoid the obstacle
-            
+            print('Avoid')
+            return cmd_vel
         else:
             cmd_vel.linear.x = kp_linear * distance_to_goal
             cmd_vel.angular.z = kp_angular * angle_to_goal
      
-        print(cmd_vel)
+        print('Kp')
         return cmd_vel
         
 def main(args=None):

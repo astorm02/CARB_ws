@@ -190,7 +190,7 @@ class TrackingNode(Node):
 
         dx_goal = current_goal_pose[0] - current_obs_pose[0]
         dy_goal = current_goal_pose[1] - current_obs_pose[1]
-        distance_to_goal = math.sqrt(dx_goal^2 + dy_goal^2)
+        distance_to_goal = math.sqrt(dx_goal**2 + dy_goal**2)
         angle_to_goal = math.atan2(dy_goal, dx_goal)
 
         kp_linear = 0.5

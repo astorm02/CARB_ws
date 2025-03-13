@@ -164,7 +164,7 @@ class TrackingNode(Node):
         # and update the command velocity accordingly
         if self.goal_pose is None:
             cmd_vel = Twist()
-            cmd_vel.linear.x = 0.0
+            cmd_vel.linear.x = 2.0
             cmd_vel.angular.z = 0.0
             self.pub_control_cmd.publish(cmd_vel)
             return
@@ -198,16 +198,12 @@ class TrackingNode(Node):
      
          # If within 0.3 meters of the goal, stop
         if distance_to_goal < 0.3:
-              cmd_vel.linear.x = 0.0
-      c       md_vel.angular.z = 0.0
+            cmd_vel.linear.x = 0.0
+            cmd_vel.angular.z = 0.0
         else:
             cmd_vel.linear.x = kp_linear * distance_to_goal
-            cmd_vel.angular.z = kp_angular * (angle_to_goal)
-            cmd_vel.linear.x = 0
-            cmd_vel.linear.y = 0
-            cmd_vel.angular.z = 0
+            cmd_vel.angular.z = kp_angular * angle_to_goal
         return cmd_vel
-    
         ############################################
 
 def main(args=None):

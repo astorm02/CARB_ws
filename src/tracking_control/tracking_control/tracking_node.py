@@ -163,16 +163,16 @@ class TrackingNode(Node):
         # But, you may want to think about what to do in this case
         # and update the command velocity accordingly
         
-        if self.goal_pose is None and self.obs_pose is None: ### Added the 'and self.obs_pose'. Currently untested. It should resolve the robot running into the obstacle.
+        # Get the current object pose in the robot base_footprint frame
+        current_obs_pose, current_goal_pose = self.get_current_poses()
+
+         if self.goal_pose is None and self.obs_pose is None: ### Added the 'and self.obs_pose'. Currently untested. It should resolve the robot running into the obstacle.
             cmd_vel = Twist()
             cmd_vel.linear.x = 0.0
             cmd_vel.angular.z = 0.0
             self.pub_control_cmd.publish(cmd_vel)
             print('No Object Detected. Moving Forward')
             return
-        
-        # Get the current object pose in the robot base_footprint frame
-        current_obs_pose, current_goal_pose = self.get_current_poses()
         
         # TODO: get the control velocity command
         print('Get Controller')

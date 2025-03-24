@@ -210,7 +210,7 @@ class TrackingNode(Node):
 
         # If too close to an obstacle, begin avoidance
         if distance_obstacle < obstacle_avoidance_radius:
-            angle_obstacle = math.atan2(dy_obs, dx_obs)+math.pi()
+            angle_obstacle = math.atan2(dy_obs, dx_obs)
             cmd_vel.linear.x = 0.1
             cmd_vel.angular.z = 1.0 # Turn to avoid the obstacle
             print('Avoiding Obstacle')

@@ -157,7 +157,12 @@ class TrackingNode(Node):
         return obstacle_pose, goal_pose
     
     def timer_update(self):
-        current_obs_pose, current_goal_pose = self.get_current_poses()
+        poses = self.get_current_poses()
+        if poses is None:
+            self.get_logger().error('Failed to get current poses')
+            return
+
+        current_obs_pose, current_goal_pose = poses
         print(current_obs_pose)
         print(current_goal_pose)
         if np.linalg.norm(current_obs_pose) == 0:

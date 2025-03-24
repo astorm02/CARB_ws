@@ -162,21 +162,23 @@ class TrackingNode(Node):
         # Now, the robot stops if the object is not detected
         # But, you may want to think about what to do in this case
         # and update the command velocity accordingly
-        
-        # Get the current object pose in the robot base_footprint frame
-        self.obs_pose, self.goal_pose = self.get_current_poses()
 
-        if self.goal_pose is None and self.obs_pose is None: ### Added the 'and self.obs_pose'. Currently untested. It should resolve the robot running into the obstacle.
+        if self.goal_pose is None
             cmd_vel = Twist()
             cmd_vel.linear.x = 0.0
             cmd_vel.angular.z = 0.0
             self.pub_control_cmd.publish(cmd_vel)
-            print('No Object Detected. Moving Forward')
+            print('No Goal Detected)
             return
+
+        # Get the current object pose in the robot base_footprint frame
+        current_obs_pose, current_goal_pose = self.get_current_poses()
+        self.get_logger().info(current_obs_pose)
+        self.get_logger().info(current_goal_pose)
         
         # TODO: get the control velocity command
         print('Get Controller')
-        cmd_vel = self.controller(self.obs_pose, self.goal_pose)
+        cmd_vel = self.controller(current_obs_pose, current_goal_pose)
         
         # publish the control command
         self.pub_control_cmd.publish(cmd_vel)
@@ -185,6 +187,7 @@ class TrackingNode(Node):
     def controller(self, current_obs_pose, current_goal_pose):
         # Instructions: You can implement your own control algorithm here
         # feel free to modify the code structure, add more parameters, more input variables for the function, etc.
+        cmd_vel = Twist()
         
         ########### Write your code here ###########
         

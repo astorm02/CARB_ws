@@ -158,6 +158,7 @@ class TrackingNode(Node):
     
     def timer_update(self):
         poses = self.get_current_poses()
+        print(poses)
         if poses is None:
             self.get_logger().error('Failed to get current poses')
             return

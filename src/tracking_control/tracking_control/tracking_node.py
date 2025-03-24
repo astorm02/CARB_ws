@@ -165,7 +165,7 @@ class TrackingNode(Node):
         
         if self.goal_pose is None and self.obs_pose is None: ### Added the 'and self.obs_pose'. Currently untested. It should resolve the robot running into the obstacle.
             cmd_vel = Twist()
-            cmd_vel.linear.x = 1.0
+            cmd_vel.linear.x = 0.0
             cmd_vel.angular.z = 0.0
             self.pub_control_cmd.publish(cmd_vel)
             print('No Object Detected. Moving Forward')
@@ -225,8 +225,8 @@ class TrackingNode(Node):
         # Approach Goal
         else:
             angle_goal = math.atan2(dy_goal, dx_goal)
-            cmd_vel.linear.x = kp_linear * distance_goal
-            cmd_vel.angular.z = kp_angular * angle_goal
+            cmd_vel.linear.x = 1
+            cmd_vel.angular.z = 0
      
         print('Going to Goal')
         return cmd_vel

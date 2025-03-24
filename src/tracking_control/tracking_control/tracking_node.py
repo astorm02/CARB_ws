@@ -164,7 +164,7 @@ class TrackingNode(Node):
         # and update the command velocity accordingly
         
         # Get the current object pose in the robot base_footprint frame
-        current_obs_pose, current_goal_pose = self.get_current_poses()
+        self.obs_pose, self.goal_pose = self.get_current_poses()
 
         if self.goal_pose is None and self.obs_pose is None: ### Added the 'and self.obs_pose'. Currently untested. It should resolve the robot running into the obstacle.
             cmd_vel = Twist()
@@ -176,7 +176,7 @@ class TrackingNode(Node):
         
         # TODO: get the control velocity command
         print('Get Controller')
-        cmd_vel = self.controller(current_obs_pose, current_goal_pose)
+        cmd_vel = self.controller(self.obs_pose, self.goal_pose)
         
         # publish the control command
         self.pub_control_cmd.publish(cmd_vel)

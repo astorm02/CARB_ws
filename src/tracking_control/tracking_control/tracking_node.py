@@ -168,7 +168,7 @@ class TrackingNode(Node):
             cmd_vel.linear.x = 0.0
             cmd_vel.angular.z = 0.0
             self.pub_control_cmd.publish(cmd_vel)
-            print('No Goal Detected)
+            print('No Goal Detected')
             return
 
         # Get the current object pose in the robot base_footprint frame

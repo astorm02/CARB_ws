@@ -102,7 +102,7 @@ class ColorObjDetectionNode(Node):
             x, y, w, h = cv2.boundingRect(largest_contour)
             # threshold by size
             if w * h < param_object_size_min:
-                print(w*h)
+                self.get_logger().info(w*h)
                 self.get_logger().info("Object too small")
                 return
             # draw rectangle

@@ -157,7 +157,10 @@ class TrackingNode(Node):
         return obstacle_pose, goal_pose
     
     def timer_update(self):
-        if np.linalg.norm(self.goal_pose) == 0:
+        current_obs_pose, current_goal_pose = self.get_current_poses()
+        print(current_obs_pose)
+        print(current_goal_pose)
+        if np.linalg.norm(current_obs_pose) == 0:
             cmd_vel = Twist()
             cmd_vel.linear.x = 0.0
             cmd_vel.angular.z = 0.0
@@ -165,12 +168,6 @@ class TrackingNode(Node):
             print("No Goal 1")
             return
         print("goal 1 passed")
-        current_obs_pose, current_goal_pose = self.get_current_poses()
-        print(current_obs_pose)
-        print(current_goal_pose)
-        if current_goal_pose is None:
-            print("No Goal 2")
-            return
         
         cmd_vel = self.controller(current_obs_pose, current_goal_pose)
         self.pub_control_cmd.publish(cmd_vel)

@@ -66,8 +66,8 @@ class TrackingNode(Node):
         self.get_logger().info('Tracking Node Started')
         
         # Current object pose
-        self.obs_pose = None
-        self.goal_pose = None
+        self.obs_pose = np.array([0, 0, 0])
+        self.goal_pose = np.array([0, 0, 0])
         
         # ROS parameters
         self.declare_parameter('world_frame_id', 'odom')
@@ -157,7 +157,7 @@ class TrackingNode(Node):
         return obstacle_pose, goal_pose
     
     def timer_update(self):
-        if self.goal_pose is None:
+        if np.linalg.norm(self.goal_pose) == 0:
             cmd_vel = Twist()
             cmd_vel.linear.x = 0.0
             cmd_vel.angular.z = 0.0

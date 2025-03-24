@@ -163,13 +163,13 @@ class TrackingNode(Node):
             self.get_logger().error('Failed to get current poses')
             return
 
-        current_obs_pose, current_goal_pose = poses
-        print(current_obs_pose)
-        print(current_goal_pose)
+        self.obs_pose, self.goal_pose = poses
+        print(self.obs_pose)
+        print(self.goal_pose)
         cmd_vel = Twist()
         
         print('Get Controller Output')
-        cmd_vel = self.controller(current_obs_pose, current_goal_pose)
+        cmd_vel = self.controller(self.obs_pose, self.goal_pose)
         self.pub_control_cmd.publish(cmd_vel)
         
         return

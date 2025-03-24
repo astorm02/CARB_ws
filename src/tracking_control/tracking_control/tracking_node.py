@@ -95,7 +95,7 @@ class TrackingNode(Node):
         # You can decide to filter the detected object pose here
         # For example, you can filter the pose based on the distance from the camera
         # or the height of the object
-        if np.linalg.norm(center_points) > 2 or center_points[2] > 0.7:
+        if np.linalg.norm(center_points) > 3 or center_points[2] > 1:
             return
         
         try:
@@ -120,7 +120,7 @@ class TrackingNode(Node):
         # You can decide to filter the detected object pose here
         # For example, you can filter the pose based on the distance from the camera
         # or the height of the object
-        if np.linalg.norm(center_points) > 2 or center_points[2] > 0.7:
+        if np.linalg.norm(center_points) > 3 or center_points[2] > 1:
             return
         
         try:
@@ -202,11 +202,11 @@ class TrackingNode(Node):
         print(distance_obstacle)
      
         # If within 0.3 meters of the goal, stop
-        if distance_goal < 0.3:
-            cmd_vel.linear.x = 0.0
-            cmd_vel.angular.z = 0.0
-            print('Reached Goal')
-            return cmd_vel
+        #if distance_goal < 0.3:
+            #cmd_vel.linear.x = 0.0
+            #cmd_vel.angular.z = 0.0
+            #print('Reached Goal')
+            #return cmd_vel
 
         # If too close to an obstacle, begin avoidance
         if distance_obstacle < obstacle_avoidance_radius:
@@ -215,7 +215,6 @@ class TrackingNode(Node):
             cmd_vel.angular.z = 1.0 # Turn to avoid the obstacle
             print('Avoiding Obstacle')
             return cmd_vel
-        
         # Approach Goal
         else:
             angle_goal = math.atan2(dy_goal, dx_goal)

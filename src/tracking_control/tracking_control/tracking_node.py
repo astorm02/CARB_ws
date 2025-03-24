@@ -66,8 +66,8 @@ class TrackingNode(Node):
         self.get_logger().info('Tracking Node Started')
         
         # Current object pose
-        self.obs_pose = np.array([10,10,10])
-        self.goal_pose = np.array([10,10,10])
+        self.obs_pose = np.array([0,0,0])
+        self.goal_pose = np.array([0,0,0])
         
         # ROS parameters
         self.declare_parameter('world_frame_id', 'odom')
@@ -174,28 +174,6 @@ class TrackingNode(Node):
         self.pub_control_cmd.publish(cmd_vel)
         
         return
-        # Get the current object pose in the robot base_footprint frame
-        #current_obs_pose, current_goal_pose = self.get_current_poses()
-        # Print current poses
-        #self.get_logger().info(current_obs_pose)
-        #self.get_logger().info(current_goal_pose)
-        
-        # Check if goal is detected
-        #if self.goal_pose is None:
-        #    cmd_vel = Twist()
-        #    cmd_vel.linear.x = 0.0
-        #    cmd_vel.angular.z = 0.0
-        #    self.pub_control_cmd.publish(cmd_vel)
-        #    print('No Goal Detected')
-        #    return
-        
-        # TODO: get the control velocity command
-        #print('Get Controller')
-        #cmd_vel = self.controller(current_obs_pose, current_goal_pose)
-        
-        # publish the control command
-        #self.pub_control_cmd.publish(cmd_vel)
-        #################################################
     
     def controller(self, current_obs_pose, current_goal_pose):
         # Instructions: You can implement your own control algorithm here
@@ -212,14 +190,14 @@ class TrackingNode(Node):
         kp_angular = 1.0 
 
         # Goal Location Calculations
-        dx_goal = current_goal_pose[0] - current_obs_pose[0]
-        dy_goal = current_goal_pose[1] - current_obs_pose[1]
+        dx_goal = current_goal_pose[0]
+        dy_goal = current_goal_pose[1]
         distance_goal = math.sqrt(dx_goal**2 + dy_goal**2)
         print(distance_goal)
 
         # Obstacle Location Calculations
-        dx_obs = current_obs_pose[0] - current_goal_pose[0]
-        dy_obs = current_obs_pose[1] - current_goal_pose[1]
+        dx_obs = current_obs_pose[0]
+        dy_obs = current_obs_pose[1]
         distance_obstacle = math.sqrt(dx_obs**2 + dy_obs**2)
         print(distance_obstacle)
      

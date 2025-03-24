@@ -101,8 +101,8 @@ class ColorObjDetectionNode(Node):
             largest_contour = max(contours, key=cv2.contourArea)
             x, y, w, h = cv2.boundingRect(largest_contour)
             # threshold by size
+            self.get_logger().info(f"object size={w*h}")
             if w * h < param_object_size_min:
-                self.get_logger().info(w*h)
                 self.get_logger().info("Object too small")
                 return
             # draw rectangle

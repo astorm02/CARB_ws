@@ -166,17 +166,13 @@ class TrackingNode(Node):
         current_obs_pose, current_goal_pose = poses
         print(current_obs_pose)
         print(current_goal_pose)
-        if np.linalg.norm(current_obs_pose) == 0:
-            cmd_vel = Twist()
-            cmd_vel.linear.x = 0.0
-            cmd_vel.angular.z = 0.0
-            self.pub_control_cmd.publish(cmd_vel)
-            print("No Goal 1")
-            return
-        print("goal 1 passed")
+        cmd_vel = Twist()
         
+        print('Get Controller Output')
         cmd_vel = self.controller(current_obs_pose, current_goal_pose)
         self.pub_control_cmd.publish(cmd_vel)
+        
+        return
         # Get the current object pose in the robot base_footprint frame
         #current_obs_pose, current_goal_pose = self.get_current_poses()
         # Print current poses

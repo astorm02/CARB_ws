@@ -157,12 +157,13 @@ class TrackingNode(Node):
         return obstacle_pose, goal_pose
     
     def timer_update(self):
-        ################### Write your code here ###################
+        # Get the current object pose in the robot base_footprint frame
+        current_obs_pose, current_goal_pose = self.get_current_poses()
+        # Print current poses
+        self.get_logger().info(current_obs_pose)
+        self.get_logger().info(current_goal_pose)
         
-        # Now, the robot stops if the object is not detected
-        # But, you may want to think about what to do in this case
-        # and update the command velocity accordingly
-
+        # Check if goal is detected
         if self.goal_pose is None:
             cmd_vel = Twist()
             cmd_vel.linear.x = 0.0
@@ -170,11 +171,6 @@ class TrackingNode(Node):
             self.pub_control_cmd.publish(cmd_vel)
             print('No Goal Detected')
             return
-
-        # Get the current object pose in the robot base_footprint frame
-        current_obs_pose, current_goal_pose = self.get_current_poses()
-        self.get_logger().info(current_obs_pose)
-        self.get_logger().info(current_goal_pose)
         
         # TODO: get the control velocity command
         print('Get Controller')

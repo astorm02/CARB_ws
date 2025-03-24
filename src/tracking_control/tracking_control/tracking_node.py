@@ -157,27 +157,40 @@ class TrackingNode(Node):
         return obstacle_pose, goal_pose
     
     def timer_update(self):
-        # Get the current object pose in the robot base_footprint frame
-        current_obs_pose, current_goal_pose = self.get_current_poses()
-        # Print current poses
-        self.get_logger().info(current_obs_pose)
-        self.get_logger().info(current_goal_pose)
-        
-        # Check if goal is detected
         if self.goal_pose is None:
             cmd_vel = Twist()
             cmd_vel.linear.x = 0.0
             cmd_vel.angular.z = 0.0
             self.pub_control_cmd.publish(cmd_vel)
-            print('No Goal Detected')
             return
         
-        # TODO: get the control velocity command
-        print('Get Controller')
+        current_obs_pose, current_goal_pose = self.get_current_poses()
+        if current_goal_pose is None:
+            return
+        
         cmd_vel = self.controller(current_obs_pose, current_goal_pose)
+        self.pub_control_cmd.publish(cmd_vel)
+        # Get the current object pose in the robot base_footprint frame
+        #current_obs_pose, current_goal_pose = self.get_current_poses()
+        # Print current poses
+        #self.get_logger().info(current_obs_pose)
+        #self.get_logger().info(current_goal_pose)
+        
+        # Check if goal is detected
+        #if self.goal_pose is None:
+        #    cmd_vel = Twist()
+        #    cmd_vel.linear.x = 0.0
+        #    cmd_vel.angular.z = 0.0
+        #    self.pub_control_cmd.publish(cmd_vel)
+        #    print('No Goal Detected')
+        #    return
+        
+        # TODO: get the control velocity command
+        #print('Get Controller')
+        #cmd_vel = self.controller(current_obs_pose, current_goal_pose)
         
         # publish the control command
-        self.pub_control_cmd.publish(cmd_vel)
+        #self.pub_control_cmd.publish(cmd_vel)
         #################################################
     
     def controller(self, current_obs_pose, current_goal_pose):

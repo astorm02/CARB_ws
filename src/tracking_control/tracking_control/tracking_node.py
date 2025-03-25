@@ -166,8 +166,7 @@ class TrackingNode(Node):
         print(poses)
 
         self.obs_pose, self.goal_pose = poses
-        print(self.obs_pose)
-        print(self.goal_pose)
+        print(self.obs_pose, self.goal_pose)
         cmd_vel = Twist()
         
         print('Get Controller Output')

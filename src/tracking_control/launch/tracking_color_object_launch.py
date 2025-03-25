@@ -26,7 +26,7 @@ def generate_launch_description():
         executable='color_goal_detection',
         name='color_goal_detection_node',
         parameters=[
-            {'color_low': [0, 0, 120]},{'color_high': [70, 70, 255]}, {'object_size_min':30}
+            {'color_low': [150, 700, 255]},{'color_high': [70, 150, 255]}, {'object_size_min':30}
         ],
         output="screen"
     )

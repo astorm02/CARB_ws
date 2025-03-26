@@ -208,7 +208,7 @@ class TrackingNode(Node):
         
         # Potential Field Gains
         k_atr = 2
-        k_rep = 50
+        k_rep = 10
 
         # Obstacle Avoidance Distance
         obs_avoid_dist = 0.5

@@ -205,7 +205,7 @@ class TrackingNode(Node):
         
         # Potential Field Gains
         k_atr = 1
-        k_rep = 2
+        k_rep = 3
 
         # Movement Gains
         k_vel = 1

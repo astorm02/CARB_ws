@@ -237,7 +237,9 @@ class TrackingNode(Node):
         angle_resultant = math.atan2(F_tot[1], F_tot[0])
 
         vel_linear = max(0.0, min(k_vel*F_tot_norm, 0.5))
+        print(f"X Velocity:{vel_linear}")
         vel_angular = max(-0.5, min(k_ang*angle_resultant, 0.5))
+        print(f"Angular Velocity:{vel_angular}")
 
         cmd_vel.linear.x = vel_linear
         cmd_vel.angular.z = vel_angular

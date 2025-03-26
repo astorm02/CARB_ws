@@ -158,16 +158,16 @@ class TrackingNode(Node):
     
     def timer_update(self):
 
-        if self.goal_pose is None:
+        if self.goal_pose is None or self.obs_pose is None:
             cmd_vel = Twist()
             cmd_vel.linear.x = 0.0
             cmd_vel.angular.z = 0.0
             self.pub_control_cmd.publish(cmd_vel)
             self.get_logger().error('Failed to get current poses')
             return
-
-        current_obs_pose, current_goal_pose = self.get_current_poses()
+            
         print("successfully found poses")
+        current_obs_pose, current_goal_pose = self.get_current_poses()
         print(current_obs_pose, current_goal_pose)
         cmd_vel = Twist()
         

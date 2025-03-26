@@ -95,8 +95,7 @@ class TrackingNode(Node):
         # You can decide to filter the detected object pose here
         # For example, you can filter the pose based on the distance from the camera
         # or the height of the object
-        if np.linalg.norm(center_points) > 3 or center_points[2] > 1:
-            return
+        
         
         try:
             # Transform the center point from the camera frame to the world frame
@@ -106,7 +105,9 @@ class TrackingNode(Node):
         except TransformException as e:
             self.get_logger().error('Transform Error: {}'.format(e))
             return
-        
+
+        #if np.linalg.norm(cp_world) > 3 or cp_world[2] > 1:
+            #return
         # Get the detected object pose in the world frame
         self.obs_pose = cp_world
 
@@ -120,8 +121,8 @@ class TrackingNode(Node):
         # You can decide to filter the detected object pose here
         # For example, you can filter the pose based on the distance from the camera
         # or the height of the object
-        if np.linalg.norm(center_points) > 3 or center_points[2] > 1:
-            return
+        #if np.linalg.norm(center_points) > 3 or center_points[2] > 1:
+            #return
         
         try:
             # Transform the center point from the camera frame to the world frame

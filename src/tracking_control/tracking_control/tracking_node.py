@@ -192,7 +192,7 @@ class TrackingNode(Node):
         ########### Write your code here ###########
         
         # Goal Reached Threshold
-        goal_thresh_dist = 0.3
+        goal_thresh_dist = 0.6
 
         # Determine Distance to the Goal
         goal_vec = current_goal_pose[:2]

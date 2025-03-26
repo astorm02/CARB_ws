@@ -16,7 +16,7 @@ def generate_launch_description():
         executable='color_obj_detection',
         name='color_obj_detection_node',
         parameters=[
-            {'color_low': [100, 50, 50]},{'color_high': [100, 100, 50]}, {'object_size_min':30}
+            {'color_low': [255, 50, 0]},{'color_high': [255, 150, 0]}, {'object_size_min':30}
         ],
         output="screen"
     )
@@ -26,7 +26,7 @@ def generate_launch_description():
         executable='color_goal_detection',
         name='color_goal_detection_node',
         parameters=[
-            {'color_low': [10, 50, 50]},{'color_high': [50, 100, 100]}, {'object_size_min':30}
+            {'color_low': [0, 100, 255]},{'color_high': [100, 0, 255]}, {'object_size_min':30}
         ],
         output="screen"
     )

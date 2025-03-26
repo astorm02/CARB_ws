@@ -202,8 +202,8 @@ class TrackingNode(Node):
 
         # End if goal is reached
         if goal_dist < goal_thresh_dist:
-            cmd_vel.linear.x = 0
-            cmd_vel.angular.z = 0
+            cmd_vel.linear.x = 0.0
+            cmd_vel.angular.z = 0.0
             return cmd_vel
         
         # Potential Field Gains
@@ -214,7 +214,7 @@ class TrackingNode(Node):
         obs_avoid_dist = 0.5
 
         # Determine Attractive Froce
-        F_atr = k_atr*unit_goal_vec
+        F_atr = -k_atr*unit_goal_vec
 
         # Determine Repulsive Force
         if current_obs_pose is not None:

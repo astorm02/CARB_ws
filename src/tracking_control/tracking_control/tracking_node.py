@@ -194,7 +194,7 @@ class TrackingNode(Node):
         # Determine Distance to the Goal
         goal_vec = current_goal_pose[:2]
         goal_dist = np.linalg.norm(goal_vec)
-        goal_vec /= goal_dist # normalizes the vector to the goal
+        unit_goal_vec = goal_vec/goal_dist # normalizes the vector to the goal
         print(f"Goal Distance:{goal_dist}")
 
         # End if goal is reached
@@ -215,16 +215,16 @@ class TrackingNode(Node):
         obs_avoid_dist = 0.5
 
         # Determine Attractive Froce
-        F_atr = k_atr*goal_vec
+        F_atr = k_atr*unit_goal_vec
 
         # Determine Repulsive Force
         if current_obs_pose is not None:
             obs_vec = current_obs_pose[:2]
-            obs_dist = np.linalg.norm(goal_vec)
+            obs_dist = np.linalg.norm(obs_vec)
             print(f"Obstacle Distance:{obs_dist}")
-            obs_vec /= obs_dist # normalizes the vector to the obstacle
+            unit_obs_vec = obs_vec/obs_dist # normalizes the vector to the obstacle
             if obs_dist < obs_avoid_dist:
-                F_rep = k_rep*((1.0/obs_dist)-(1.0/obs_avoid_dist))*(1.0/(obs_dist**2))*(-obs_vec)
+                F_rep = k_rep*((1.0/obs_dist)-(1.0/obs_avoid_dist))*(1.0/(obs_dist**2))*(-unit_obs_vec)
             else:
                 F_rep = np.array([0.0,0.0])
         else:

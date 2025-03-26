@@ -96,7 +96,7 @@ class TrackingNode(Node):
         # For example, you can filter the pose based on the distance from the camera
         # or the height of the object
         
-        if np.linalg.norm(center_points) > 2.5 or center_points[2] > 0.7:
+        if np.linalg.norm(center_points) > 4 or center_points[2] > 0.7:
             return
         
 
@@ -124,7 +124,7 @@ class TrackingNode(Node):
         # For example, you can filter the pose based on the distance from the camera
         # or the height of the object
 
-        if np.linalg.norm(center_points) > 2.5 or center_points[2] > 0.7:
+        if np.linalg.norm(center_points) > 4 or center_points[2] > 0.7:
             return
         
         try:
@@ -218,7 +218,7 @@ class TrackingNode(Node):
         obs_avoid_dist = 1
 
         # Determine Attractive Froce
-        F_atr = -k_atr*unit_goal_vec
+        F_atr = k_atr*unit_goal_vec
 
         # Determine Repulsive Force
         if current_obs_pose is not None:

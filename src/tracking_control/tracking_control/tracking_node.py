@@ -237,6 +237,8 @@ class TrackingNode(Node):
 
         cmd_vel.linear.x = vel_linear
         cmd_vel.angular.z = vel_angular
+
+        return cmd_vel
         
         # Obstacle Avoidance Radius Value
         #obstacle_avoidance_radius = 0.35 # Minimum distance to obstacle to avoid  

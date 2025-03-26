@@ -192,7 +192,7 @@ class TrackingNode(Node):
         ########### Write your code here ###########
         
         # Goal Reached Threshold
-        goal_thresh_dist = 0.6
+        goal_thresh_dist = 0.3
 
         # Determine Distance to the Goal
         goal_vec = current_goal_pose[:2]
@@ -207,8 +207,8 @@ class TrackingNode(Node):
             return cmd_vel
         
         # Potential Field Gains
-        k_atr = 5
-        k_rep = 10
+        k_atr = 2
+        k_rep = 50
 
         # Obstacle Avoidance Distance
         obs_avoid_dist = 0.5

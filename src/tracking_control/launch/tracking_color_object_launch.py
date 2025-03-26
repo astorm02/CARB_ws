@@ -16,21 +16,21 @@ def generate_launch_description():
         executable='color_obj_detection',
         name='color_obj_detection_node',
         parameters=[
-            {'color_low': [140, 130, 35]},{'color_high': [255, 190, 180]}, {'object_size_min':200}
+            {'color_low': [10, 50, 50]},{'color_high': [45, 100, 100]}, {'object_size_min':200}
         ],
         output="screen"
     )
-
+    # {'color_low': [140, 130, 35]},{'color_high': [255, 190, 180]}
     goal_detection_node = Node(
         package=object_detection_pkg,
         executable='color_goal_detection',
         name='color_goal_detection_node',
         parameters=[
-            {'color_low': [60, 35, 140]},{'color_high': [180, 255, 255]}, {'object_size_min':200}
+            {'color_low': [200, 50, 50]},{'color_high': [250, 100, 100]}, {'object_size_min':200}
         ],
         output="screen"
     )
-
+    # {'color_low': [60, 35, 140]},{'color_high': [180, 255, 255]}
     tracking_control_node = Node(
         package=tracking_pkg,
         executable='tracking_node',

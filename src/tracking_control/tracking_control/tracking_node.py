@@ -178,7 +178,7 @@ class TrackingNode(Node):
         # print(current_goal_pose)
         
         # print('Running Controller Algorithm')
-        cmd_vel = self.controller(self.obs_pose, self.goal_pose)
+        cmd_vel = self.controller(current_obs_pose, current_goal_pose)
         # print("Publishing Controller Command")
         self.pub_control_cmd.publish(cmd_vel)
         

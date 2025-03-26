@@ -164,19 +164,19 @@ class TrackingNode(Node):
             cmd_vel.linear.x = 0.0
             cmd_vel.angular.z = 0.0
             self.pub_control_cmd.publish(cmd_vel)
-            self.get_logger().error('Objects not Found')
+            # self.get_logger().error('Objects not Found')
             return
             
-        print("successfully found poses")
+        # print("successfully found poses")
         current_obs_pose, current_goal_pose = self.get_current_poses()
-        print("Obstacle Pose:")
-        print(current_obs_pose)
-        print("Goal Pose:")
-        print(current_goal_pose)
+        # print("Obstacle Pose:")
+        # print(current_obs_pose)
+        # print("Goal Pose:")
+        # print(current_goal_pose)
         
-        print('Running Controller Algorithm')
+        # print('Running Controller Algorithm')
         cmd_vel = self.controller(self.obs_pose, self.goal_pose)
-        print("Publishing Controller Command")
+        # print("Publishing Controller Command")
         self.pub_control_cmd.publish(cmd_vel)
         
         return
@@ -195,6 +195,7 @@ class TrackingNode(Node):
         goal_vec = current_goal_pose[:2]
         goal_dist = np.linalg.norm(goal_vec)
         goal_vec /= goal_dist # normalizes the vector to the goal
+        print(goal_dist)
 
         # End if goal is reached
         if goal_dist < goal_thresh_dist:
@@ -241,48 +242,6 @@ class TrackingNode(Node):
         cmd_vel.angular.z = vel_angular
 
         return cmd_vel
-        
-        # Obstacle Avoidance Radius Value
-        #obstacle_avoidance_radius = 0.35 # Minimum distance to obstacle to avoid  
-
-        # Proportional Controller K Values
-        #kp_linear = 0.5
-        #kp_angular = 1.0 
-
-        # Goal Location Calculations
-        #dx_goal = current_goal_pose[0]
-        #dy_goal = current_goal_pose[1]
-        #distance_goal = math.sqrt(dx_goal**2 + dy_goal**2)
-        #print(distance_goal)
-
-        # Obstacle Location Calculations
-        #dx_obs = current_obs_pose[0]
-        #dy_obs = current_obs_pose[1]
-        #distance_obstacle = math.sqrt(dx_obs**2 + dy_obs**2)
-        #print(distance_obstacle)
-     
-        # If within 0.3 meters of the goal, stop
-        #if distance_goal < 0.3:
-            #cmd_vel.linear.x = 0.0
-            #cmd_vel.angular.z = 0.0
-            #print('Reached Goal')
-            #return cmd_vel
-
-        # If too close to an obstacle, begin avoidance
-        #if distance_obstacle < obstacle_avoidance_radius:
-        #    angle_obstacle = math.atan2(dy_obs, dx_obs)
-        #    cmd_vel.linear.x = 0.1
-        #    cmd_vel.angular.z = 1.0 # Turn to avoid the obstacle
-        #    print('Avoiding Obstacle')
-        #    return cmd_vel
-        # Approach Goal
-        #else:
-        #    angle_goal = math.atan2(dy_goal, dx_goal)
-        #    cmd_vel.linear.x = 1
-        #    cmd_vel.angular.z = 0
-     
-        #print('Going to Goal')
-        #return cmd_vel
         
 def main(args=None):
     # Initialize the rclpy library

@@ -218,7 +218,7 @@ class TrackingNode(Node):
         obs_avoid_dist = 1
 
         # Determine Attractive Froce
-        F_atr = k_atr*unit_goal_vec
+        F_atr = -k_atr*unit_goal_vec
 
         # Determine Repulsive Force
         if current_obs_pose is not None:
@@ -227,7 +227,7 @@ class TrackingNode(Node):
             print(f"Obstacle Distance:{obs_dist}")
             unit_obs_vec = obs_vec/obs_dist # normalizes the vector to the obstacle
             if obs_dist < obs_avoid_dist:
-                F_rep = k_rep*((1.0/obs_dist)-(1.0/obs_avoid_dist))*(1.0/(obs_dist**2))*(-unit_obs_vec)
+                F_rep = k_rep*((1.0/obs_dist)-(1.0/obs_avoid_dist))*(1.0/(obs_dist**2))*(unit_obs_vec)
             else:
                 F_rep = np.array([0.0,0.0])
         else:

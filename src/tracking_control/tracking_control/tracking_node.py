@@ -96,8 +96,8 @@ class TrackingNode(Node):
         # For example, you can filter the pose based on the distance from the camera
         # or the height of the object
         
-        #if np.linalg.norm(center_points) > 2.5 or center_points[2] > 0.7:
-        #    return
+        if np.linalg.norm(center_points) > 2.5 or center_points[2] > 0.7:
+            return
         
 
         try:
@@ -124,8 +124,8 @@ class TrackingNode(Node):
         # For example, you can filter the pose based on the distance from the camera
         # or the height of the object
 
-        #if np.linalg.norm(center_points) > 2.5 or center_points[2] > 0.7:
-        #    return
+        if np.linalg.norm(center_points) > 2.5 or center_points[2] > 0.7:
+            return
         
         try:
             # Transform the center point from the camera frame to the world frame

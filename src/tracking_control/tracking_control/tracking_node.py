@@ -159,7 +159,7 @@ class TrackingNode(Node):
     
     def timer_update(self):
 
-        if self.goal_pose is None or self.obs_pose is None:
+        if self.goal_pose is None:
             cmd_vel = Twist()
             cmd_vel.linear.x = 0.0
             cmd_vel.angular.z = 0.0
@@ -218,7 +218,7 @@ class TrackingNode(Node):
         F_atr = k_atr*goal_vec
 
         # Determine Repulsive Force
-        if current_goal_pose is not None:
+        if current_obs_pose is not None:
             obs_vec = current_obs_pose[:2]
             obs_dist = np.linalg.norm(goal_vec)
             print(f"Obstacle Distance:{obs_dist}")

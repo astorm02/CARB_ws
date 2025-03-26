@@ -233,18 +233,20 @@ class TrackingNode(Node):
         F_tot = F_atr + F_rep
         F_tot_norm = np.linalg.norm(F_tot)
 
+        angle_goal = math.atan2(F_atr[1], F_atr[0])
         angle_resultant = math.atan2(F_tot[1], F_tot[0])
 
         vel_linear = max(0.0, min(F_tot_norm, 0.5))
         # print(f"X Velocity:{vel_linear}")
         cmd_vel.linear.x = vel_linear
 
-        if np.linalg.norm(F_rep)==0.0:
-            cmd_vel.angular.z = 0.0
-        else:
+        if np.linalg.norm(F_rep) != 0.0:
             vel_angular = max(-0.5, min(angle_resultant, 0.5))
             # print(f"Angular Velocity:{vel_angular}")
             cmd_vel.angular.z = vel_angular
+            
+        else:
+            cmd_vel.angular.z = max(-0.5, min(angle_goal, 0.5))
 
         return cmd_vel
         

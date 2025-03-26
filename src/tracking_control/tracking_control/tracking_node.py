@@ -215,6 +215,7 @@ class TrackingNode(Node):
 
         # Determine Attractive Froce
         F_atr = -k_atr*unit_goal_vec
+        print(f"Attractive:{F_atr}")
 
         # Determine Repulsive Force
         if current_obs_pose is not None:
@@ -229,25 +230,20 @@ class TrackingNode(Node):
         else:
             F_rep = np.array([0.0,0.0])
         
+        print(f"Repulsive:{F_rep}")
         # Determine Total Force
         F_tot = F_atr + F_rep
         F_tot_norm = np.linalg.norm(F_tot)
 
-        angle_goal = math.atan2(F_atr[1], F_atr[0])
-        angle_obs = -math.atan2(F_rep[1], F_rep[0])
+        angle_goal = -math.atan2(F_atr[1], F_atr[0])
+        angle_obs = math.atan2(F_rep[1], F_rep[0])
         angle_resultant = math.atan2(F_tot[1], F_tot[0])
 
         vel_linear = max(0.0, min(F_tot_norm, 0.5))
         # print(f"X Velocity:{vel_linear}")
         cmd_vel.linear.x = vel_linear
 
-        if np.linalg.norm(F_rep) != 0.0:
-            vel_angular = max(-0.5, min(angle_obs, 0.5))
-            # print(f"Angular Velocity:{vel_angular}")
-            cmd_vel.angular.z = vel_angular
-            
-        else:
-            cmd_vel.angular.z = max(-0.5, min(angle_goal, 0.5))
+        cmd_vel.angular.z = max(-0.5, min(angle_resultant, 0.5))
 
         return cmd_vel
         

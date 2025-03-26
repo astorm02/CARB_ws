@@ -159,7 +159,7 @@ class TrackingNode(Node):
     
     def timer_update(self):
 
-        if self.goal_pose is None:
+        if self.goal_pose is None or self.obs_pose is None:
             cmd_vel = Twist()
             cmd_vel.linear.x = 0.0
             cmd_vel.angular.z = 0.0

@@ -209,7 +209,7 @@ class TrackingNode(Node):
         # Potential Field Gains
         k_atr = 1
         k_rep = 3
-        
+
         # Obstacle Avoidance Distance
         obs_avoid_dist = 0.5
 
@@ -223,7 +223,7 @@ class TrackingNode(Node):
             print(f"Obstacle Distance:{obs_dist}")
             unit_obs_vec = obs_vec/obs_dist # normalizes the vector to the obstacle
             if obs_dist < obs_avoid_dist:
-                F_rep = k_rep*((1.0/obs_dist)-(1.0/obs_avoid_dist))*(1.0/(obs_dist**2))*(unit_obs_vec)
+                F_rep = k_rep*((1.0/obs_dist)-(1.0/obs_avoid_dist))*(1.0/(obs_dist**2))*(-unit_obs_vec)
             else:
                 F_rep = np.array([0.0,0.0])
         else:

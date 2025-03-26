@@ -233,8 +233,8 @@ class TrackingNode(Node):
         F_tot = F_atr + F_rep
         F_tot_norm = np.linalg.norm(F_tot)
 
-        angle_goal = -math.atan2(F_atr[1], F_atr[0])
-        angle_obs = math.atan2(F_rep[1], F_rep[0])
+        angle_goal = math.atan2(F_atr[1], F_atr[0])
+        angle_obs = -math.atan2(F_rep[1], F_rep[0])
         angle_resultant = math.atan2(F_tot[1], F_tot[0])
 
         vel_linear = max(0.0, min(F_tot_norm, 0.5))

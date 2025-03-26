@@ -198,6 +198,8 @@ class TrackingNode(Node):
 
         # End if goal is reached
         if goal_dist < goal_thresh_dist:
+            cmd_vel.linear.x = 0
+            cmd_vel.angular.z = 0
             return cmd_vel
         
         # Potential Field Gains

@@ -257,8 +257,8 @@ class TrackingNode(Node):
         u = F_tot/np.linalg.norm(F_tot)
         print(u)
 
-        cmd_vel.linear.x = max(-0.3, min(u[0], 0.3))
-        cmd_vel.linear.y = max(-0.3, min(u[1], 0.3))
+        cmd_vel.linear.x = u[0]
+        cmd_vel.linear.y = u[1]
         
 
         return cmd_vel

@@ -229,21 +229,14 @@ class TrackingNode(Node):
                 F_rep = np.array([0.0,0.0])
         else:
             F_rep = np.array([0.0,0.0])
-        
+        prev_obs_pose = current_obs_pose
         print(f"Repulsive:{F_rep}")
         # Determine Total Force
         F_tot = F_atr + F_rep
-        F_tot_norm = np.linalg.norm(F_tot)
 
-        angle_goal = -math.atan2(F_atr[1], F_atr[0])
-        angle_obs = math.atan2(F_rep[1], F_rep[0])
-        angle_resultant = math.atan2(F_tot[1], F_tot[0])
-
-        vel_linear = max(0.0, min(F_tot_norm, 0.5))
-        # print(f"X Velocity:{vel_linear}")
-        cmd_vel.linear.x = vel_linear
-
-        cmd_vel.angular.z = max(-0.5, min(angle_resultant, 0.5))
+        cmd_vel.linear.x = max(0.0, min(F_tot[0], 0.5))
+        cmd_vel.linear.y = max(0.0, min(F_tot[1], 0.5))
+        
 
         return cmd_vel
         

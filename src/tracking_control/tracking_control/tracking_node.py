@@ -208,11 +208,11 @@ class TrackingNode(Node):
             return cmd_vel
         
         # Potential Field Gains
-        k_atr = 2
+        k_atr = 4
         k_rep = 3
 
         # Obstacle Avoidance Distance
-        obs_avoid_dist = 0.8
+        obs_avoid_dist = 0.6
 
         # Determine Attractive Froce
         F_atr = k_atr*unit_goal_vec

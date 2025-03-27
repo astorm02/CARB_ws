@@ -193,13 +193,13 @@ class TrackingNode(Node):
         ########### Write your code here ###########
         
         # Goal Reached Threshold
-        goal_thresh_dist = 0.3
+        goal_thresh_dist = 0.4
 
         # Determine Distance to the Goal
         goal_vec = current_goal_pose[:2]
         goal_dist = np.linalg.norm(goal_vec)
         unit_goal_vec = goal_vec/goal_dist # normalizes the vector to the goal
-        print(f"Goal Distance:{goal_dist}")
+        #print(f"Goal Distance:{goal_dist}")
 
         # End if goal is reached
         if goal_dist < goal_thresh_dist:
@@ -216,7 +216,7 @@ class TrackingNode(Node):
 
         # Determine Attractive Froce
         F_atr = k_atr*unit_goal_vec
-        print(f"Attractive:{F_atr}")
+        #print(f"Attractive:{F_atr}")
 
         # Determine Repulsive Force
 
@@ -227,7 +227,7 @@ class TrackingNode(Node):
 
                 obs_vec = current_obs_pose[:2]
                 obs_dist = np.linalg.norm(obs_vec)
-                print(f"Obstacle Distance:{obs_dist}")
+                #print(f"Obstacle Distance:{obs_dist}")
                 unit_obs_vec = obs_vec/obs_dist # normalizes the vector to the obstacle
                 self.prev_obs_pose = current_obs_pose
 
@@ -250,15 +250,15 @@ class TrackingNode(Node):
         
         
 
-        print(f"Repulsive:{F_rep}")
+        #print(f"Repulsive:{F_rep}")
         # Determine Total Force
         F_tot = F_atr + F_rep
 
         u = F_tot/np.linalg.norm(F_tot)
         print(u)
 
-        cmd_vel.linear.x = max(-0.5, min(u[0], 0.5))
-        cmd_vel.linear.y = max(-0.5, min(u[1], 0.5))
+        cmd_vel.linear.x = max(-0.3, min(u[0], 0.3))
+        cmd_vel.linear.y = max(-0.3, min(u[1], 0.3))
         
 
         return cmd_vel

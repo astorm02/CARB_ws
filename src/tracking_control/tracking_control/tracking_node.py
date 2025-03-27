@@ -219,19 +219,36 @@ class TrackingNode(Node):
         print(f"Attractive:{F_atr}")
 
         # Determine Repulsive Force
-        if current_obs_pose == self.prev_obs_pose:
-            obs_vec = current_obs_pose[:2]
-            obs_dist = np.linalg.norm(obs_vec)
-            print(f"Obstacle Distance:{obs_dist}")
-            unit_obs_vec = obs_vec/obs_dist # normalizes the vector to the obstacle
-            if obs_dist < obs_avoid_dist:
-                F_rep = k_rep*((1.0/obs_dist)-(1.0/obs_avoid_dist))*(1.0/(obs_dist**2))*(-unit_obs_vec)
+
+
+        if current_obs_pose != None:
+            
+            if self.prev_obs_pose != current_obs_pose:
+
+                obs_vec = current_obs_pose[:2]
+                obs_dist = np.linalg.norm(obs_vec)
+                print(f"Obstacle Distance:{obs_dist}")
+                unit_obs_vec = obs_vec/obs_dist # normalizes the vector to the obstacle
+                self.prev_obs_pose = current_obs_pose
+
+                if obs_dist < obs_avoid_dist:
+
+                    F_rep = k_rep*((1.0/obs_dist)-(1.0/obs_avoid_dist))*(1.0/(obs_dist**2))*(-unit_obs_vec)
+
+                else:
+
+                    F_rep = np.array([0.0,0.0])
+
             else:
+                
                 F_rep = np.array([0.0,0.0])
+
         else:
+
+            self.prev_obs_pose = np.array([0.0,0.0,0.0])
             F_rep = np.array([0.0,0.0])
         
-        self.prev_obs_pose = current_obs_pose
+        
 
         print(f"Repulsive:{F_rep}")
         # Determine Total Force

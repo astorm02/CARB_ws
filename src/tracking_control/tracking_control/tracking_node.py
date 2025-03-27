@@ -68,6 +68,7 @@ class TrackingNode(Node):
         # Current object pose
         self.obs_pose = None
         self.goal_pose = None
+        self.prev_obs_pose = None
         
         # ROS parameters
         self.declare_parameter('world_frame_id', 'odom')
@@ -162,7 +163,7 @@ class TrackingNode(Node):
     
     def timer_update(self):
 
-        if self.goal_pose is None or self.obs_pose is None:
+        if self.goal_pose is None and self.obs_pose is None:
             cmd_vel = Twist()
             cmd_vel.linear.x = 0.0
             cmd_vel.angular.z = 0.0
@@ -218,7 +219,7 @@ class TrackingNode(Node):
         print(f"Attractive:{F_atr}")
 
         # Determine Repulsive Force
-        if current_obs_pose is not None:
+        if current_obs_pose == self.prev_obs_pose:
             obs_vec = current_obs_pose[:2]
             obs_dist = np.linalg.norm(obs_vec)
             print(f"Obstacle Distance:{obs_dist}")
@@ -229,7 +230,9 @@ class TrackingNode(Node):
                 F_rep = np.array([0.0,0.0])
         else:
             F_rep = np.array([0.0,0.0])
-        prev_obs_pose = current_obs_pose
+        
+        self.prev_obs_pose = current_obs_pose
+
         print(f"Repulsive:{F_rep}")
         # Determine Total Force
         F_tot = F_atr + F_rep

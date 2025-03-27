@@ -212,7 +212,7 @@ class TrackingNode(Node):
         k_rep = 3
 
         # Obstacle Avoidance Distance
-        obs_avoid_dist = 0.5
+        obs_avoid_dist = 0.8
 
         # Determine Attractive Froce
         F_atr = k_atr*unit_goal_vec

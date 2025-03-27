@@ -223,7 +223,7 @@ class TrackingNode(Node):
 
         if current_obs_pose is not None and self.prev_obs_pose is not None:
             
-            if self.prev_obs_pose != current_obs_pose:
+            if self.prev_obs_pose is not current_obs_pose:
 
                 obs_vec = current_obs_pose[:2]
                 obs_dist = np.linalg.norm(obs_vec)

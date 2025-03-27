@@ -209,7 +209,7 @@ class TrackingNode(Node):
         
         # Potential Field Gains
         k_atr = 2
-        k_rep = 10
+        k_rep = 2
 
         # Obstacle Avoidance Distance
         obs_avoid_dist = 0.5
@@ -254,8 +254,10 @@ class TrackingNode(Node):
         # Determine Total Force
         F_tot = F_atr + F_rep
 
-        cmd_vel.linear.x = max(0.0, min(F_tot[0], 0.5))
-        cmd_vel.linear.y = max(0.0, min(F_tot[1], 0.5))
+        u = F_tot/np.linalg.norm(F_tot)
+
+        cmd_vel.linear.x = max(-0.5, min(u[0], 0.5))
+        cmd_vel.linear.y = max(-0.5, min(u[1], 0.5))
         
 
         return cmd_vel

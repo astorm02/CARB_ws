@@ -209,10 +209,10 @@ class TrackingNode(Node):
         
         # Potential Field Gains
         k_atr = 2
-        k_rep = 5
+        k_rep = 3
 
         # Obstacle Avoidance Distance
-        obs_avoid_dist = 0.5
+        obs_avoid_dist = 1
 
         # Determine Attractive Froce
         F_atr = k_atr*unit_goal_vec
@@ -255,6 +255,7 @@ class TrackingNode(Node):
         F_tot = F_atr + F_rep
 
         u = F_tot/np.linalg.norm(F_tot)
+        print(u)
 
         cmd_vel.linear.x = max(-0.5, min(u[0], 0.5))
         cmd_vel.linear.y = max(-0.5, min(u[1], 0.5))

@@ -214,7 +214,7 @@ class TrackingNode(Node):
         obs_avoid_dist = 0.5
 
         # Determine Attractive Froce
-        F_atr = -k_atr*unit_goal_vec
+        F_atr = k_atr*unit_goal_vec
         print(f"Attractive:{F_atr}")
 
         # Determine Repulsive Force

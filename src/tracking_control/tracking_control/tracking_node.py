@@ -221,7 +221,7 @@ class TrackingNode(Node):
         # Determine Repulsive Force
 
 
-        if current_obs_pose is not None:
+        if current_obs_pose is not None and self.prev_obs_pose is not None:
             
             if self.prev_obs_pose != current_obs_pose:
 
